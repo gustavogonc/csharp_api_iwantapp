@@ -11,6 +11,7 @@ namespace IWantApp.Domain.Products
         {
             var contract = new Contract<Category>()
                 .IsNullOrEmpty(name, "Name", "Nome é obrigatório")
+                .IsGreaterOrEqualsThan(name, 3, "Name")
                 .IsNullOrEmpty(createdBy, "CreatedBy", "CreatedBy é obrigatório")
                 .IsNullOrEmpty(editedBy, "EditedBy", "EditedBy é obrigatório");
 
