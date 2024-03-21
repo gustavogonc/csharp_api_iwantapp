@@ -7,14 +7,20 @@ namespace IWantApp.Domain.Products
         public string Name { get; set; }
         public bool Active { get; set; }
 
-        public Category(string name)
+        public Category(string name, string createdBy, string editedBy)
         {
             var contract = new Contract<Category>()
-                .IsNotNull(name, "Name", "Nome é obrigatório");
+                .IsNullOrEmpty(name, "Name", "Nome é obrigatório")
+                .IsNullOrEmpty(createdBy, "CreatedBy", "CreatedBy é obrigatório")
+                .IsNullOrEmpty(editedBy, "EditedBy", "EditedBy é obrigatório");
 
             AddNotifications(contract);
             Name = name;
             Active = true;
+            CreatedBy = createdBy;
+            EditedBy = editedBy;
+            CreatedOn = DateTime.Now;
+            EditedOn = DateTime.Now;
         }
     }
 }
