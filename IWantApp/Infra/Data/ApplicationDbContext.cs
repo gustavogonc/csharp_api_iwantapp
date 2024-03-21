@@ -17,6 +17,8 @@ namespace IWantApp.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Ignore<Notification>();
             builder.Entity<Product>().Property(p => p.Description).HasMaxLength(255);
             builder.Entity<Product>().Property(p => p.Name).IsRequired();
