@@ -21,18 +21,18 @@ namespace IWantApp.Endpoints.Employees
                 return Results.BadRequest(result.Errors.First());
             }
 
-            var claimResult = userManager.AddClaimAsync(user, new Claim("EmployeeCode", employeeRequest.EmployeeCode)).Result;
-
-            if (claimResult.Succeeded)
+            var userClaims = new List<Claim>
             {
-                return Results.BadRequest(claimResult.Errors.First());
-            }
+                new Claim("EmployeeCode", employeeRequest.EmployeeCode),
+                new Claim("Name", employeeRequest.Name)
 
-            claimResult = userManager.AddClaimAsync(user, new Claim("Name", employeeRequest.Name)).Result;
+            };
 
-            if (claimResult.Succeeded)
+            var claimsResult = userManager.AddClaimsAsync(user, userClaims).Result;
+
+            if (!claimsResult.Succeeded)
             {
-                return Results.BadRequest(claimResult.Errors.First());
+                return Results.BadRequest(claimsResult.Errors.First());
             }
 
 
