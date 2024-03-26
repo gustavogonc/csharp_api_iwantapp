@@ -14,7 +14,15 @@ namespace IWantApp.Endpoints.Employees
         public static IResult Action(UserManager<IdentityUser> userManager)
         {
             var users = userManager.Users.ToList();
-            return Results.Ok(users);
+            var employees = new List<EmployeeResponse>();
+            foreach (var item in users)
+            {
+                var claims = userManager.GetClaimsAsync(item).Result;
+                var claimName = claims.First(c => c.Type == "Name");
+                var userName = claimName != null ? claimName.Value : string.Empty;
+                employees.Add(new EmployeeResponse(item.Email, userName));
+            }
+            return Results.Ok(employees);
         }
     }
 }
