@@ -43,7 +43,7 @@ namespace IWantApp.Endpoints.Security
             return Results.Ok(new
             {
                 token = tokenHandler.WriteToken(token)
-            })
+            });
         }
     }
 }
