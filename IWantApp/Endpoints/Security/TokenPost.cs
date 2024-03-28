@@ -1,5 +1,6 @@
 ﻿using IWantApp.Domain.Products;
 using IWantApp.Infra.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,6 +15,7 @@ namespace IWantApp.Endpoints.Security
         public static string[] Methods => new string[] { HttpMethod.Post.ToString() };
         public static Delegate Handle => Action;
 
+        [AllowAnonymous]
         public static IResult Action(LoginRequest loginRequest, IConfiguration configuration, UserManager<IdentityUser> userManager)
         {
             var user = userManager.FindByEmailAsync(loginRequest.Email).Result;
@@ -26,7 +28,7 @@ namespace IWantApp.Endpoints.Security
                 return Results.BadRequest();
             }
 
-            var key = Encoding.ASCII.GetBytes(configuration["JwtBearerTokenSettings:SecreKey"]);
+            var key = Encoding.ASCII.GetBytes(configuration["JwtBearerTokenSettings:SecretKey"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
