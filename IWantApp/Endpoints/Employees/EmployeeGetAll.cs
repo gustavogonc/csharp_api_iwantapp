@@ -1,9 +1,5 @@
-﻿using Dapper;
-using IWantApp.Domain.Products;
-using IWantApp.Infra.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.SqlClient;
-using System.Security.Claims;
+﻿using IWantApp.Infra.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IWantApp.Endpoints.Employees
 {
@@ -13,6 +9,7 @@ namespace IWantApp.Endpoints.Employees
         public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
         public static Delegate Handle => Action;
 
+        [Authorize(Policy = "EmployeePolicy")]
         public static IResult Action(int? page, int? rows, QueryAllUsersWithClaimName query)
         {
             return Results.Ok(query.Execute(page.Value, rows.Value));
