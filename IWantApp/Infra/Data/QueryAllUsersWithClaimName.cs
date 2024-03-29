@@ -12,7 +12,7 @@ namespace IWantApp.Infra.Data
             this.configuration = configuration;
         }
 
-        public IEnumerable<EmployeeResponse> Execute(int page, int rows)
+        public async Task<IEnumerable<EmployeeResponse>> Execute(int page, int rows)
         {
             var db = new SqlConnection(configuration["Database:SqlServer"]);
             string query = @"select Email, ClaimValue as Name 
@@ -21,7 +21,7 @@ namespace IWantApp.Infra.Data
                          on u.id = c.UserId and claimType = 'Name'
                          order by name
                          OFFSET (@page - 1) * @rows ROWS FETCH NEXT @rows ROWS ONLY";
-            return db.Query<EmployeeResponse>(query, new { page, rows });
+            return await db.QueryAsync<EmployeeResponse>(query, new { page, rows });
         }
     }
 }
