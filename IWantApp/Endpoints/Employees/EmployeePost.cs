@@ -12,9 +12,10 @@ namespace IWantApp.Endpoints.Employees
         public static string[] Methods => new string[] { HttpMethod.Post.ToString() };
         public static Delegate Handle => Action;
 
-        [AllowAnonymous]
-        public static IResult Action(EmployeeRequest employeeRequest, UserManager<IdentityUser> userManager)
+        [Authorize(Policy = "EmployeePolicy")]
+        public static IResult Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager)
         {
+            var created = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var user = new IdentityUser { UserName = employeeRequest.Email, Email = employeeRequest.Email };
             var result = userManager.CreateAsync(user, employeeRequest.Password).Result;
 
@@ -26,7 +27,8 @@ namespace IWantApp.Endpoints.Employees
             var userClaims = new List<Claim>
             {
                 new Claim("EmployeeCode", employeeRequest.EmployeeCode),
-                new Claim("Name", employeeRequest.Name)
+                new Claim("Name", employeeRequest.Name),
+                new Claim("CreatedBy", created)
 
             };
 
