@@ -1,5 +1,6 @@
 ﻿using IWantApp.Domain.Products;
 using IWantApp.Infra.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
@@ -11,6 +12,7 @@ namespace IWantApp.Endpoints.Employees
         public static string[] Methods => new string[] { HttpMethod.Post.ToString() };
         public static Delegate Handle => Action;
 
+        [AllowAnonymous]
         public static IResult Action(EmployeeRequest employeeRequest, UserManager<IdentityUser> userManager)
         {
             var user = new IdentityUser { UserName = employeeRequest.Email, Email = employeeRequest.Email };

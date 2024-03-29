@@ -15,6 +15,7 @@ namespace IWantApp.Domain.Products
             EditedBy = editedBy;
             CreatedOn = DateTime.Now;
             EditedOn = DateTime.Now;
+
             Validate();
 
         }
@@ -22,18 +23,20 @@ namespace IWantApp.Domain.Products
         private void Validate()
         {
             var contract = new Contract<Category>()
-                            .IsNullOrEmpty(Name, "Name", "Nome é obrigatório")
+                            .IsNotNullOrEmpty(Name, "Name", "Nome é obrigatório")
                             .IsGreaterOrEqualsThan(Name, 3, "Name")
-                            .IsNullOrEmpty(CreatedBy, "CreatedBy", "CreatedBy é obrigatório")
-                            .IsNullOrEmpty(EditedBy, "EditedBy", "EditedBy é obrigatório");
+                            .IsNotNullOrEmpty(CreatedBy, "CreatedBy", "CreatedBy é obrigatório")
+                            .IsNotNullOrEmpty(EditedBy, "EditedBy", "EditedBy é obrigatório");
 
             AddNotifications(contract);
         }
 
-        public void EditInfo(string name, bool active)
+        public void EditInfo(string name, bool active, string editedBy)
         {
             Active = active;
             Name = name;
+            EditedBy = editedBy;
+            EditedOn = DateTime.Now;
 
             Validate();
         }
