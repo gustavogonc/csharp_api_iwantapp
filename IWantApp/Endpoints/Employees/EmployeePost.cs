@@ -13,11 +13,11 @@ namespace IWantApp.Endpoints.Employees
         public static Delegate Handle => Action;
 
         [Authorize(Policy = "EmployeePolicy")]
-        public static IResult Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager)
+        public static async Task<IResult> Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager)
         {
             var created = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var user = new IdentityUser { UserName = employeeRequest.Email, Email = employeeRequest.Email };
-            var result = userManager.CreateAsync(user, employeeRequest.Password).Result;
+            var result = await userManager.CreateAsync(user, employeeRequest.Password);
 
             if (!result.Succeeded)
             {
@@ -32,7 +32,7 @@ namespace IWantApp.Endpoints.Employees
 
             };
 
-            var claimsResult = userManager.AddClaimsAsync(user, userClaims).Result;
+            var claimsResult = await userManager.AddClaimsAsync(user, userClaims);
 
             if (!claimsResult.Succeeded)
             {
