@@ -13,7 +13,7 @@ namespace IWantApp.Endpoints.Categories
         public static Delegate Handle => Action;
 
         [Authorize(Policy = "EmployeePolicy")]
-        public static IResult Action([FromBody] CategoryRequest categoryRequest, HttpContext http, ApplicationDbContext context)
+        public static async Task<IResult> Action([FromBody] CategoryRequest categoryRequest, HttpContext http, ApplicationDbContext context)
         {
             var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var category = new Category(categoryRequest.Name, userId, userId);
@@ -23,8 +23,8 @@ namespace IWantApp.Endpoints.Categories
             {
                 return Results.ValidationProblem(category.Notifications.ConvertToProblemDetails());
             }
-            context.Categories.Add(category);
-            context.SaveChanges();
+            await context.Categories.AddAsync(category);
+            await context.SaveChangesAsync();
 
             return Results.Created($"/categories/{category.Id}",category.Id);
         }
