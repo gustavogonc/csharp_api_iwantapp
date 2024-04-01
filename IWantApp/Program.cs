@@ -1,16 +1,24 @@
-using IWantApp.Endpoints.Categories;
 using IWantApp.Endpoints.Employees;
 using IWantApp.Endpoints.Security;
-using IWantApp.Infra.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseSerilog((context, configuration) =>
+{
+    configuration.WriteTo.Console()
+    .WriteTo.MSSqlServer(
+        context.Configuration["Database:SqlServer"],
+        sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions()
+        {
+            AutoCreateSqlTable = true,
+            TableName = "LogApi"
+        });
+});
 builder.Services.AddSqlServer<ApplicationDbContext>(builder.Configuration["Database:SqlServer"]);
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
