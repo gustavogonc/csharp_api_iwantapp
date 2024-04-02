@@ -1,12 +1,14 @@
-﻿namespace IWantApp.Endpoints.Products
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace IWantApp.Endpoints.Products
 {
     public class ProductPost
     {
         public static string Template => "/products";
-        public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
+        public static string[] Methods => new string[] { HttpMethod.Post.ToString() };
         public static Delegate Handle => Action;
         [Authorize(Policy = "EmployeePolicy")]
-        public static async Task<IResult> Action(ProductRequest productRequest, HttpContext http, ApplicationDbContext context)
+        public static async Task<IResult> Action([FromBody] ProductRequest productRequest, HttpContext http, ApplicationDbContext context)
         {
             var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var category = await context.Categories.FirstOrDefaultAsync(c => c.Id == productRequest.CategoryId);
