@@ -15,7 +15,7 @@
 		<Using Include="IWantApp.Infra.Data" />
 		<Using Include="Microsoft.AspNetCore.Authorization" />
 		<Using Include="System.Security.Claims" />
-		<Using Include="IWantApp.Endpoints.Categories"/>
+		<Using Include="IWantApp.Endpoints.Categories" />
 	</ItemGroup>
 	
   <ItemGroup>
