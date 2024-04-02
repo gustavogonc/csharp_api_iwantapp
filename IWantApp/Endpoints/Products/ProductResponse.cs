@@ -1,6 +1,4 @@
 ﻿namespace IWantApp.Endpoints.Products
 {
-    public class ProductResponse
-    {
-    }
+    public record ProductResponse(string Name, string CategoryName, string Description, bool HasStock, bool Active);
 }
