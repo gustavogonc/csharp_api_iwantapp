@@ -10,7 +10,7 @@
             var products = context.Products.Include(p => p.Category)
                 .Where(p => p.HasStock && p.Category.Active)
                 .OrderBy(p => p.Name).ToList();
-            var results = products.Select(p => new ProductResponse(p.Name, p.Category.Name, p.Description, p.HasStock, p.Price, p.Active));
+            var results = products.Select(p => new ProductResponse(p.Name, p.Category.Name, p.Description, p.HasStock, p.Price, p.Price, p.Active));
             return Results.Ok(results);
         }
     }
