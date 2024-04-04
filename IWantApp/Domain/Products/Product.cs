@@ -10,19 +10,19 @@ namespace IWantApp.Domain.Products
         public string Description { get; set; }
         public bool HasStock { get; set; }
         public bool Active { get; set; }
-
+        public decimal Price { get; set; }
         public Product()
         {
 
         }
 
-        public Product(string name, Category category, string description, bool hasStock, string userId)
+        public Product(string name, Category category, string description, bool hasStock, decimal price, string userId)
         {
             Name = name;
             Category = category;
             Description = description;
             HasStock = hasStock;
-
+            Price = price;
             CreatedBy = userId;
             EditedBy = userId;
             CreatedOn = DateTime.Now;
@@ -40,6 +40,7 @@ namespace IWantApp.Domain.Products
                 .IsNotNull(Category, "Category",  "Category not found")
                 .IsNotNullOrEmpty(Description, "Description")
                 .IsGreaterOrEqualsThan(Description, 3, "Description")
+                .IsGreaterOrEqualsThan(Price, 0.01, "Price")
                 .IsNotNullOrEmpty(CreatedBy, "CreatedBy")
                 .IsNotNullOrEmpty(EditedBy, "EditedBy");
             AddNotifications(contract);
