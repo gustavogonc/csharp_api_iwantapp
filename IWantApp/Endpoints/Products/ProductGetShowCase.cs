@@ -5,6 +5,7 @@
         public static string Template => "/products/showcase";
         public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
         public static Delegate Handle => Action;
+        [AllowAnonymous]
         public static async Task<IResult> Action(ApplicationDbContext context)
         {
             var products = context.Products.Include(p => p.Category)
