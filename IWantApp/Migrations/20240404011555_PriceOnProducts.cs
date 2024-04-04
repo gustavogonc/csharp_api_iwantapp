@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
 namespace IWantApp.Migrations
 {
     public partial class PriceOnProducts : Migration
