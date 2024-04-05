@@ -8,16 +8,17 @@
         [AllowAnonymous]
         public static async Task<IResult> Action(ApplicationDbContext context, int page = 1, int row = 10, string orderBy = "name")
         {
-           
-            if(row > 10)
+
+            if (row > 10)
             {
-                return Results.Problem(title: "Row with max 10", statusCode: 400)
+                return Results.Problem(title: "Row with max 10", statusCode: 400);
             }
-            var queryBase = context.Products.Include(p => p.Category)
+
+            var queryBase = context.Products.AsNoTracking().Include(p => p.Category)
                 .Where(p => p.HasStock && p.Category.Active);
 
             var queryFilter = queryBase.Skip((page - 1) * row).Take(row);
-            if(orderBy == "name")
+            if (orderBy == "name")
             {
                 queryFilter = queryFilter.OrderBy(p => p.Name);
             }
