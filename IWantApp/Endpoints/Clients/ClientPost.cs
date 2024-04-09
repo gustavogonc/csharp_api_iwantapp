@@ -1,4 +1,4 @@
-﻿namespace IWantApp.Endpoints.Employees
+﻿namespace IWantApp.Endpoints.Clients
 {
     public class ClientPost
     {

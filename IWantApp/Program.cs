@@ -1,6 +1,3 @@
-using IWantApp.Endpoints.Employees;
-using IWantApp.Endpoints.Products;
-using IWantApp.Endpoints.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Data.SqlClient;
