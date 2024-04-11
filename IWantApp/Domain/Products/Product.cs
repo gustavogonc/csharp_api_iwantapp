@@ -1,4 +1,5 @@
 ﻿using Flunt.Validations;
+using IWantApp.Domain.Orders;
 
 namespace IWantApp.Domain.Products
 {
@@ -11,6 +12,8 @@ namespace IWantApp.Domain.Products
         public bool HasStock { get; set; }
         public bool Active { get; set; }
         public decimal Price { get; set; }
+        public ICollection<Order> Orders { get; private set; }
+
         public Product()
         {
 

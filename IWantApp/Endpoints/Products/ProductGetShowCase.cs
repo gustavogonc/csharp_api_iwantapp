@@ -33,7 +33,7 @@
 
             var products = queryFilter.ToList();
 
-            var results = products.Select(p => new ProductResponse(p.Name, p.Category.Name, p.Description, p.HasStock, p.Price, p.Price, p.Active));
+            var results = products.Select(p => new ProductResponse(p.Name, p.Category.Name, p.Description, p.HasStock, p.Price, p.Active));
             return Results.Ok(results);
         }
     }
