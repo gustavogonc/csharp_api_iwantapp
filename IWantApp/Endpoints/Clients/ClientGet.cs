@@ -16,7 +16,8 @@ namespace IWantApp.Endpoints.Clients
             var resultado = new
             {
                 Id = user.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value,
-                Name = user.Claims.First(c => c.Type == "name").Value
+                Name = user.Claims.First(c => c.Type == "Name").Value,
+                Cpf = user.Claims.First(c => c.Type == "Cpf").Value
             };
 
             return Results.Ok(resultado);
