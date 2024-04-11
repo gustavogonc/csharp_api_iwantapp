@@ -1,3 +1,4 @@
+using IWantApp.Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Data.SqlClient;
@@ -28,6 +29,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddScoped<UserCreator>();
 builder.Services.AddScoped<QueryAllUsersWithClaimName>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

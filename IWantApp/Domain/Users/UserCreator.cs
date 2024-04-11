@@ -9,17 +9,17 @@
             _userManager = userManager;
 
         }
-        public async Task<IdentityResult> Create(string email, string password, List<Claim> claims)
+        public async Task<(IdentityResult, string)> Create(string email, string password, List<Claim> claims)
         {
-            var user = new IdentityUser { UserName = email, Email = email };
-            var result = await _userManager.CreateAsync(user, password);
+            var newUser = new IdentityUser { UserName = email, Email = email };
+            var result = await _userManager.CreateAsync(newUser, password);
 
             if (!result.Succeeded)
             {
-                return result;
+                return (result, string.Empty);
             }
 
-            return await _userManager.AddClaimsAsync(user, claims);
+            return (await _userManager.AddClaimsAsync(newUser, claims), newUser.Id);
         }
     }
 }
