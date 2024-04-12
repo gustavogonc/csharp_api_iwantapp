@@ -6,15 +6,15 @@ namespace IWantApp.Infra.Data
 {
     public class QueryAllUsersWithClaimName
     {
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration _configuration;
         public QueryAllUsersWithClaimName(IConfiguration configuration)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
         }
 
         public async Task<IEnumerable<EmployeeResponse>> Execute(int page, int rows)
         {
-            var db = new SqlConnection(configuration["Database:SqlServer"]);
+            var db = new SqlConnection(_configuration["Database:SqlServer"]);
             string query = @"select Email, ClaimValue as Name 
                          from IWantDb.dbo.AspNetUsers u 
                          inner join IWantDb.dbo.AspNetUserClaims c

@@ -32,6 +32,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 
 builder.Services.AddScoped<UserCreator>();
 builder.Services.AddScoped<QueryAllUsersWithClaimName>();
+builder.Services.AddScoped<QueryAllProductsSold>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -89,6 +90,7 @@ app.MapMethods(TokenPost.Template, TokenPost.Methods, TokenPost.Handle);
 app.MapMethods(ProductGetAll.Template, ProductGetAll.Methods, ProductGetAll.Handle);
 app.MapMethods(ProductPost.Template, ProductPost.Methods, ProductPost.Handle);
 app.MapMethods(ProductGetShowCase.Template, ProductGetShowCase.Methods, ProductGetShowCase.Handle);
+app.MapMethods(ProductSoldGet.Template, ProductSoldGet.Methods, ProductSoldGet.Handle);
 app.MapMethods(ClientPost.Template, ClientPost.Methods, ClientPost.Handle);
 app.MapMethods(ClientGet.Template, ClientGet.Methods, ClientGet.Handle);
 app.MapMethods(OrderPost.Template, OrderPost.Methods, OrderPost.Handle);
