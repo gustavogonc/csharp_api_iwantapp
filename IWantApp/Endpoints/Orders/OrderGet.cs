@@ -11,7 +11,7 @@
             var clientClaim = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
             var employeeClaim = http.User.Claims.FirstOrDefault(c => c.Type == "EmployeeCode").Value;
 
-            var order = context.Orders.FirstOrDefault(o => o.Id == id);
+            var order = context.Orders.Include(p => p.Products).FirstOrDefault(o => o.Id == id);
 
             if(order.ClientId != clientClaim.Value && employeeClaim == null)
             {
